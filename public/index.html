@@ -1,39 +1,162 @@
 <!DOCTYPE html>
 
-<html>
+<html ng-app='myApp'>
 
-	<head>
-		<title>Clementine.js - The elegant and lightweight full stack JavaScript boilerplate.</title>
-		
-		<link href="/public/css/main.css" rel="stylesheet" type="text/css">
-	</head>
+<head>
+   <title>Restaurant Reservation</title>
+   <link href="/public/css/main.css" rel="stylesheet" type="text/css">
+   <!-- Latest compiled and minified CSS -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+   <!-- Optional theme -->
+   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   <!-- Latest compiled and minified JavaScript -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.js"></script>     
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-route.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular-resource.js"></script>
+</head>
 
-	<header>
-		<p>Welcome, <span id="display-name"></span>!</p>
-		<a class="menu" href="/profile">Profile</a>
-		<p>|</p>
-		<a class="menu" href="/logout">Logout</a>
+<header>
+   <div  ng-controller="headerusuario">
+      <div  id="contenedormenu">
+         <ul  id="menudropdown" >
+            <a href='/' target="_self"> <li>Inicio</li></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+               <li role="presentation" class="dropdown">
+                   Bienvenido! {{ myNombre}} <span class="caret"></span>
+    
+                   <ul id="dropmenu" class="dropdown-menu">
+                     <a href='/logout' target="_self"><li>Cerrar Sesion </li></a>
+                   </ul>
+               </li>
+             </a>
+          </ul>
+       </div>
+	  </div>
 	</header>
-
-	<body>
-		<div class="container">
-			<img src="/public/img/clementine_150.png" />
-			<br />
-			<p class="clementine-text">Clementine.js</p>
-		</div>
-	
-		<div class="container">
-			<p>You have clicked the button <span id="click-nbr"></span> times.</p>
-			<br />
-			<div class="btn-container">
-				<button type="submit" class="btn btn-add">CLICK ME!</button>
-				<button class="btn btn-delete">RESET</button>
-			</div>
-		</div>
 		
-		<script type="text/javascript" src="common/ajax-functions.js"></script>
-		<script type="text/javascript" src="controllers/clickController.client.js"></script>
-		<script type="text/javascript" src="controllers/userController.client.js"></script>
-	</body>
+	<body>
+		  <div id='contenedorform' ng-controller='yelpresponse'>
+       <div id='contenedorinput'>
+          <input ng-model="local.name" />
+          <button ng-click="search()">Buscar</button>
+       </div>
+       <img width='60' height='60' src='public/img/loading.gif' ng-hide="loading"/> 
+       <ul>
+          <li  ng-repeat='d in yelp' >
+            <table id='tablahoteles' ng-init="e[$index]=d.reserved; h[$index]=d.hide">
+                <tr> <td style="color:white">{{d.state}}</td> <td colspan='2'><img src='{{d.rating_img_url}}'>  </td> </tr>
+                <tr> <td style='background-color:#F8BBD0' colspan='3'>{{d.name}} </td> </tr>
+                <tr> <td colspan='4' style="color:white" >Reservaciones: <span >{{d.nreservados}}</span> </tr>
+                <tr> <td colspan='4' ><img class='imgrestaurant' src='{{d.image_url}}'> </td> </tr>
+                <tr>
+                   <td colspan='2'>
+                      <button   ng-hide='h[$index]' ng-click="myFunc($index,d.id,d)">Reservar!</button>
+                      <div ng-show='e[$index]' id='divreservado' ><button   ng-click='myFunc($index,d.id,d)'>Reservado! √</button></div>
+                   </td>
+                </tr>
+      
+                <!--FILA PARA EL COMENTARIO--> 
+                <tr>
+                   <td colspan='4'>
+                   <img id='imgicon' src='public/img/icon-user.png'>
+                   <textarea id="comment" >{{d.snippet_text}}</textarea></td>
+                </tr>
+            </table>
+         </li>
+      </ul>
+   </div>
+
+<script>
+if (window.location.hash && window.location.hash == '#_=_') {
+        window.location.hash = '';
+}
+
+      
+ var app = angular.module('myApp', ['ngRoute'])
+
+
+
+.controller('headerusuario', function($scope, $http) {
+
+    $http.get("/user").then(function(response) {
+
+        $scope.myNombre = response.data.facebook.name;
+    
+    });
+})
+
+.controller('yelpresponse', function($scope, $http,$timeout) {
+  
+    $scope.myFunc = function(index,id,d) {
+  
+        $http.post("/",{id});
+      
+    //CHANGING BUTTONS
+        $scope.e[index] = !$scope.e[index];
+        $scope.h[index] = !$scope.h[index];
+         
+   //INCREMENTING NO RESERVATIONS
+        if($scope.e[index]){
+           d.nreservados += 1; 
+        }else{
+           d.nreservados -= 1;
+      
+        }
+     };
+    
+     
+    
+    $scope.search=function(){
+    
+       $http.post("/",{inputbuscar:$scope.local}).success(function(response){
+    
+           $scope.loading   = false;
+           $scope.status    = 'Cargando Resultados...';
+           $scope.yelp      = ''; 
+           // Simulating a http request with a timeout
+           $timeout(function(){
+        
+              $scope.yelp    = response;
+              $scope.loading = true;
+           },2000);
+    
+       });
+      
+     }; 
+    
+    
+    $http.get("/yelp").then(function(response) {
+   
+       $scope.e       = [];
+       $scope.h       = [];
+       $scope.loading = false;
+               // Simulating a http request with a timeout
+       $timeout(function(){
+           $scope.yelp    = response.data;
+           $scope.loading = true;
+       },2000);
+    
+    });
+
+})
+
+
+
+.config(function($routeProvider, $locationProvider) {
+  
+  $routeProvider
+  .when('/', {
+     templateUrl : 'public/view/chapter.html',
+     controller  : 'yelpresponse'
+  });
+
+   $locationProvider.html5Mode(true);
+});
+
+</script>
+</body>
+
 
 </html>

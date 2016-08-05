@@ -1,10 +1,15 @@
 'use strict';
-
-var path = process.cwd();
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var path			= process.cwd();
+var dataHandler 	= require(path+'/app/controllers/datacontroller.js');
+var bodyParser		= require('body-parser');
+var objHandler		= new dataHandler();
 
 module.exports = function (app, passport) {
-
+	
+	app.use(bodyParser.json());	
+	bodyParser.urlencoded({ extended: false });
+	
+	
 	function isLoggedIn (req, res, next) {
 		if (req.isAuthenticated()) {
 			return next();
@@ -12,46 +17,46 @@ module.exports = function (app, passport) {
 			res.redirect('/login');
 		}
 	}
+	
 
-	var clickHandler = new ClickHandler();
+	
+	app.route('/user')
+	.get(function(req,res){
+		res.json(req.user);
+	});
 
 	app.route('/')
-		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/index.html');
-		});
-
+	.get(isLoggedIn,function(req,res){
+		res.sendFile(path + '/public/index.html');
+	})
+	.post(objHandler.postapi);
+	
+	
+	app.route('/yelp')
+	.get(isLoggedIn,objHandler.yelpapi)
+	
+	
 	app.route('/login')
 		.get(function (req, res) {
 			res.sendFile(path + '/public/login.html');
 		});
 
 	app.route('/logout')
-		.get(function (req, res) {
-			req.logout();
-			res.redirect('/login');
-		});
+	.get(function (req, res) {
+		req.logout();
+		res.redirect('/login');
+	});
 
-	app.route('/profile')
-		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/profile.html');
-		});
 
-	app.route('/api/:id')
-		.get(isLoggedIn, function (req, res) {
-			res.json(req.user.github);
-		});
 
-	app.route('/auth/github')
-		.get(passport.authenticate('github'));
 
-	app.route('/auth/github/callback')
-		.get(passport.authenticate('github', {
-			successRedirect: '/',
-			failureRedirect: '/login'
-		}));
+	app.route('/auth/facebook')
+	.get(passport.authenticate('facebook', { scope : 'email' }));
 
-	app.route('/api/:id/clicks')
-		.get(isLoggedIn, clickHandler.getClicks)
-		.post(isLoggedIn, clickHandler.addClick)
-		.delete(isLoggedIn, clickHandler.resetClicks);
+	app.route('/auth/facebook/callback')
+    .get(passport.authenticate('facebook', {
+    	successRedirect : '/'
+    })); 
+
+	
 };

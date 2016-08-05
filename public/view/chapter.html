@@ -1,0 +1,36 @@
+
+<ul >
+  <li  ng-repeat='x in yelp' >
+   
+  
+   <table id='tablahoteles'>
+     
+      <tr> <td style="color:white">{{state}}</td> <td colspan='2'><img src={{x.rating_img_url}}>  </td> </tr>
+      <tr > <td style='background-color:white ' colspan='3'><h3>{{x.name}}</h3> </td> </tr>
+      
+      <tr>  <td colspan='4' ><img class='imgrestaurant' src={{x.image_url}}> </td> 
+      </tr>
+     <tr>
+      <td colspan='2'>
+         
+        <button  ng-show='e[$index]'  ng-hide='h[$index]' ng-click="myFunc($index)">Reservar!</button>
+        <div ng-show='e[$index]' id='divreservado' ><span style='color:#e1f5fe'>Reservado!</span> <button  class='stylebutton' ng-click='myFunc($index)'>Quitar Reservacion x</button></div>
+      </td>
+      </tr>
+      
+      <!--FILA PARA EL COMENTARIO--> 
+       <tr >
+           
+          <td colspan='2'>
+              <img id='imgicon' src='public/img/icon-user.png'>
+              <textarea id="comment" >{{x.snippet_text}}</textarea></td>
+      </tr>
+   
+   </table>
+    
+      
+ 
+   
+  
+   </li>
+</ul>

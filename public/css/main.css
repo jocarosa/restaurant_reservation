@@ -197,8 +197,142 @@ span {
 	color: #FF630D;
 }
 
+#contenedormenu{
+width:100%;
+height:45px;
+
+	margin:auto;
+	background-color: #c2185b  ;
+	color:white;
+}
+#menudropdown {
+	margin-left:80px;
+	color:white;
+	height: 30px;
+}
+#menudropdown a {
+
+	color:white;
+}
+#menudropdown li{
+	
+	float:left;
+	margin-left: 12px;
+	list-style: none;
+
+	padding:10px;
+}
+#menudropdown li:hover{
+background-color:#880e4f  ;	
+}
+#menudropdown  a {
+	font-size: 15px;
+	text-decoration: none;
+}
+#dropmenu{
+	background-color: #880e4f;
+}
+
 #menu-divide {
 	color: #FFFFFF;
 	display: inline;
 	margin: 0;
+}
+#tablahoteles{
+	font-size: 12px;
+	font-weight: bold;
+	background-color: #c2185b ;
+	color:black;
+	float:left;
+	border-radius: 10px;
+	margin-left:20px;
+	margin-top:20px;
+	margin-bottom:10px;
+	
+	
+}
+ul{
+	list-style: none;
+}
+
+#tablahoteles td{
+	padding:15px;
+	text-align: center;
+	font-family: arial ;
+
+	
+}
+
+.imgreservado {
+	width:100px;
+	height:100px;
+}
+.imgrestaurant{
+	
+	width:140px;
+	height:140px;
+	margin:auto;
+	margin-top:10px;
+	border-radius: 5px;
+	border:0.3px solid black;
+}
+
+
+#tablacomentario{
+	width:auto;
+	padding:10px;
+	border:1px solid black;
+	float:left;
+	
+	
+}
+#comment{
+	color:black;
+	height:200px;
+	resize:none;
+	float:left;
+	margin-bottom: 8px;
+	margin-right: 10px;
+	font-weight: bold;
+}
+#imgicon{
+	width:20px;
+	height:20px;
+	float:left;
+	margin-right:5px;
+	margin-left:3px;
+}
+#contenedorform{
+	font-size:40px;
+	width:1000px;
+	margin:auto;
+	margin-bottom: 20px;
+}
+#contenedorform input {
+font-size: 30px;
+	
+}
+#contenedorform button{
+	color:black;
+	width:170px;
+	font-size:14px;
+	background-color: white;
+	padding:10px;
+	padding-bottom: 10px;
+	border-radius: 10px;
+}
+#contenedorinput{
+	margin:auto;
+	padding-left:250px;
+
+
+}
+#contenedorinput button{
+	margin-top: -15px;
+	background-color:  #880e4f;
+	color:white;
+}
+#divreservado button{
+	background-color: #03A9F4;
+	color:white;
 }
