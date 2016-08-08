@@ -93,10 +93,18 @@ this.postapi=function(req,res){
 
     if(req.body.inputbuscar){
         
-        var input=req.body.inputbuscar.name;
-    
-        // SAVING LAS VISIT
-        ultimo.findByIdAndUpdate('57629e017ba3f5f10c37eb3a', {ultimo:input}, function(err,doc){});
+        var input = req.body.inputbuscar.name;
+        
+        ultimo.find({},function(err,doc){
+           // console.log('test'+doc);
+            if(doc.length==0){
+                var last = new ultimo({ultimo:input});
+                last.save(function(err,doc){})
+            }else{
+                ultimo.update({id:doc.id}, {ultimo:input}, function(err,doc){});
+            }
+        });
+        
             recoldata(input,req.user.id,function funcion(data){
                 res.json(data);
             });
@@ -167,9 +175,9 @@ this.postapi=function(req,res){
 this.yelpapi=function(req,res){
     
     // FIND OUT LAS VISIT
-    ultimo.findById('57629e017ba3f5f10c37eb3a', function (err, doc) {
+    ultimo.find({}, function (err, doc) {
     
-      recoldata(doc.ultimo,req.user.id,function funcion(data){
+      recoldata(doc[0].ultimo,req.user.id,function funcion(data){
        
          res.json(data);
     
