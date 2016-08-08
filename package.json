@@ -30,7 +30,10 @@
     "mongoose": "^4.1.0",
     "passport": "^0.3.0",
     "passport-github": "^1.0.0",
-    "yelp":"^v2.0"
+    "yelp":"^1.0.1",
+    "passport-facebook":"^2.1.1",
+    "connect":"^3.4.1",
+    "body-parser":"^1.15.1"
     
   }
 }
