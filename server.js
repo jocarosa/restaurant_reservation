@@ -27,7 +27,7 @@ app.use(session({
   }),
 
    store: new MongoStore({
-    url: process.env.MONGO_URI
+    url: 'mongodb://jocarosa:jocarosa19@ds145325.mlab.com:45325/restaurant'
   }),
 }));
 
