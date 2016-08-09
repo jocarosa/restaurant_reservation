@@ -8,7 +8,7 @@ module.exports = {
 	},
 	'facebookAuth' : {
         'clientID'      : '246983182331445', // your App ID
-        'clientSecret'  : '6ef898d18cd96577b154d48a78c59da2', // your App Secret
+        'clientSecret'  : 'dfae31ddd89b5c2f68196999b686d94a', // your App Secret
         'callbackURL'   : 'https://hotel-jocarosa.c9users.io/auth/facebook/callback'
     }
 };

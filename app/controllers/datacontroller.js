@@ -91,10 +91,11 @@ module.exports=  function(){
     
 this.postapi=function(req,res){
 
+
     if(req.body.inputbuscar){
         
         var input = req.body.inputbuscar.name;
-        
+        console.log(input)
         ultimo.find({},function(err,doc){
            // console.log('test'+doc);
             if(doc.length==0){
@@ -176,8 +177,9 @@ this.yelpapi=function(req,res){
     
     // FIND OUT LAS VISIT
     ultimo.find({}, function (err, doc) {
-    
-      recoldata(doc[0].ultimo,req.user.id,function funcion(data){
+    var ultimo='new york';
+    if(doc.length>0){ultimo=doc[0].ultimo;}    
+      recoldata(ultimo,req.user.id,function funcion(data){
        
          res.json(data);
     

@@ -1,12 +1,9 @@
 'use strict';
-
 var express 	= require('express');
 var routes		= require('./app/routes/index.js');
 var mongoose	= require('mongoose');
 var passport	= require('passport');
 var session 	= require('express-session')
-var MongoStore  = require('connect-mongostore')(session);
-
 
 var app = express();
 require('dotenv').load();
@@ -19,13 +16,9 @@ app.use('/public', express.static(process.cwd() + '/public'));
 
 
 app.use(session({
-	store: new MongoStore({    
-    'db': 'restaurant'
-  }),
-
-   store: new MongoStore({
-    url: 'mongodb://jocarosa:jocarosa19@ds145325.mlab.com:45325/restaurant'
-  }),
+	secret: 'secretClementine',
+	resave: false,
+	saveUninitialized: true
 }));
 
 app.use(passport.initialize());
