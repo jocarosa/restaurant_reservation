@@ -5,11 +5,7 @@
   "main": "server.js",
   "repository": {
     "type": "git",
-<<<<<<< HEAD
     "url": "git+https://github.com/johnstonbl01/clementinejs-fcc.git"
-=======
-    "url": "https://github.com/jocarosa/restaurant_reservation"
->>>>>>> 97d91e230e0fee1d38c8ee557ad0bbd0434930e0
   },
   "homepage": "http://www.clementinejs.com/",
   "bugs": {
@@ -36,21 +32,10 @@
     "express-session": "^1.11.3",
     "jade": "^1.11.0",
     "mongoose": "^4.1.0",
-<<<<<<< HEAD
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
     "passport-github": "^1.0.0",
     "yelp": "^1.0.1"
   },
   "devDependencies": {}
-=======
-    "passport": "^0.3.0",
-    "passport-github": "^1.0.0",
-    "yelp":"^1.0.1",
-    "passport-facebook":"^2.1.1",
-    "connect":"^3.4.1",
-    "body-parser":"^1.15.1"
-    
-  }
->>>>>>> 97d91e230e0fee1d38c8ee557ad0bbd0434930e0
 }
