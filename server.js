@@ -5,6 +5,8 @@ var routes		= require('./app/routes/index.js');
 var mongoose	= require('mongoose');
 var passport	= require('passport');
 var session 	= require('express-session')
+var MongoStore  = require('connect-mongostore')(session);
+
 
 var app = express();
 require('dotenv').load();
@@ -19,7 +21,14 @@ app.use('/public', express.static(process.cwd() + '/public'));
 app.use(session({
 	secret: 'secretClementine',
 	resave: false,
-	saveUninitialized: true
+	saveUninitialized: true,
+	store: new MongoStore({    
+    'db': 'restaurant'
+  }),
+
+   store: new MongoStore({
+    url: process.env.MONGO_URI
+  }),
 }));
 
 app.use(passport.initialize());
