@@ -19,9 +19,6 @@ app.use('/public', express.static(process.cwd() + '/public'));
 
 
 app.use(session({
-	secret: 'secretClementine',
-	resave: false,
-	saveUninitialized: true,
 	store: new MongoStore({    
     'db': 'restaurant'
   }),
