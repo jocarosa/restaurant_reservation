@@ -1,6 +1,6 @@
 'use strict';
 var path			= process.cwd();
-var dataHandler 	= require(path+'./app/controllers/datacontroller.js');
+var dataHandler 	= require(path+'/app/controllers/datacontroller.js');
 var bodyParser		= require('body-parser');
 var objHandler		= new dataHandler();
 
